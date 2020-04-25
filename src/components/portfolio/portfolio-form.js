@@ -27,6 +27,10 @@ export default class PortfolioForm extends Component {
         this.handleThumbDrop = this.handleThumbDrop.bind(this);
         this.handleBannerDrop = this.handleBannerDrop.bind(this);
         this.handleLogoDrop = this.handleLogoDrop.bind(this);
+
+        this.thumbRef = React.createRef();
+        this.bannerRef = React.createRef();
+        this.logoRef = React.createRef();
     }
 
     handleThumbDrop() {
@@ -96,7 +100,21 @@ export default class PortfolioForm extends Component {
         axios.post("https://jameshostetter.devcamp.space/portfolio/portfolio_items", this.buildForm(), { withCredentials: true })
         .then(response => {
             this.props.handleSuccessfulFormSubmission(response.data.portfolio_item)
-            console.log("response", response);
+
+            this.setState({
+                name: "",
+                description: "",
+                category: "construction",
+                position: "",
+                url: "",
+                thumb_image: "",
+                banner_image: "",
+                logo: ""
+            });
+
+            [this.thumbRef, this.bannerRef, this.logoRef].forEach(ref => {
+                ref.current.dropzone.removeAllFiles();
+            });
         }).catch(error => {
             console.log("portfolio form handleSubmit error", error);
         })
@@ -106,82 +124,82 @@ export default class PortfolioForm extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Portfolio form goes here...</h1>
+            <form onSubmit={this.handleSubmit} className="portfolio-form-wrapper">
+                <div className="two-column">
+                    <input type="text"
+                        name="name"
+                        placeholder="Portfolio Item Name"
+                        value={this.state.name}
+                        onChange={this.handleChange}
+                    />
 
-                <form onSubmit={this.handleSubmit}>
-                    <div>
-                        <input type="text"
-                            name="name"
-                            placeholder="Portfolio Item Name"
-                            value={this.state.name}
-                            onChange={this.handleChange}
-                        />
+                    <input type="text"
+                        name="url"
+                        placeholder="URL"
+                        value={this.state.url}
+                        onChange={this.handleChange}
+                    />
+                </div>
 
-                        <input type="text"
-                            name="url"
-                            placeholder="URL"
-                            value={this.state.url}
-                            onChange={this.handleChange}
-                        />
-                    </div>
+                <div className="two-column">
+                    <input type="text"
+                        name="position"
+                        placeholder="Position"
+                        value={this.state.position}
+                        onChange={this.handleChange}
+                    />
 
-                    <div>
-                        <input type="text"
-                            name="position"
-                            placeholder="Position"
-                            value={this.state.position}
-                            onChange={this.handleChange}
-                        />
+                    <select
+                        name="category"
+                        value={this.state.category}
+                        onChange={this.handleChange}
+                        className="select-element"
+                    >
+                        <option value="construction">Construction</option>
+                        <option value="help_desk">Help Desk</option>
+                        <option value="cable_technician">Cable Technician</option>
+                    </select>
+                </div>
 
-                        <select
-                            name="category"
-                            value={this.state.category}
-                            onChange={this.handleChange}
-                        >
-                            <option value="construction">Construction</option>
-                            <option value="help_desk">Help Desk</option>
-                            <option value="cable_technician">Cable Technician</option>
-                        </select>
-                    </div>
+                <div className="one-column">
+                    <textarea type="text"
+                        name="description"
+                        placeholder="Description"
+                        value={this.state.description}
+                        onChange={this.handleChange}
+                    />
+                </div>
 
-                    <div>
-                        <textarea type="text"
-                            name="description"
-                            placeholder="Description"
-                            value={this.state.description}
-                            onChange={this.handleChange}
-                        />
-                    </div>
+                <div className="image-uploaders three-column">
+                    <DropzoneComponent
+                    ref={this.thumbRef}
+                    config={this.componentConfig()}
+                    djsConfig={this.djsConfig()}
+                    eventHandlers={this.handleThumbDrop()}
+                    >
+                    </DropzoneComponent>
 
-                    <div className="image-uploaders">
-                        <DropzoneComponent
-                        config={this.componentConfig()}
-                        djsConfig={this.djsConfig()}
-                        eventHandlers={this.handleThumbDrop()}
-                        >
-                        </DropzoneComponent>
+                    <DropzoneComponent
+                    ref={this.bannerRef}
+                    config={this.componentConfig()}
+                    djsConfig={this.djsConfig()}
+                    eventHandlers={this.handleBannerDrop()}
+                    >
+                    </DropzoneComponent>
 
-                        <DropzoneComponent
-                        config={this.componentConfig()}
-                        djsConfig={this.djsConfig()}
-                        eventHandlers={this.handleBannerDrop()}
-                        >
-                        </DropzoneComponent>
+                    <DropzoneComponent
+                    ref={this.logoRef}
+                    config={this.componentConfig()}
+                    djsConfig={this.djsConfig()}
+                    eventHandlers={this.handleLogoDrop()}
+                    >
+                    </DropzoneComponent>
+                </div>
 
-                        <DropzoneComponent
-                        config={this.componentConfig()}
-                        djsConfig={this.djsConfig()}
-                        eventHandlers={this.handleLogoDrop()}
-                        >
-                        </DropzoneComponent>
-                    </div>
-
-                    <div>
-                        <button type="submit">Save</button>
-                    </div>
-                </form>
-            </div>
+                <div>
+                    <button type="submit">Save</button>
+                </div>
+            </form>
         )
     }
 }
