@@ -122,6 +122,33 @@ export default class PortfolioForm extends Component {
         event.preventDefault();
     }
 
+    componentDidUpdate() {
+        if (Object.keys(this.props.portfolioToEdit).length > 0) {
+            const {
+                id,
+                name,
+                description,
+                category,
+                position,
+                url,
+                thumb_image_url,
+                banner_image_url,
+                logo_url
+            } = this.props.portfolioToEdit;
+
+            this.props.clearPortfolioToEdit();
+
+            this.setState({
+                id: id,
+                name: name || "",
+                description: description || "",
+                category: category || "construction",
+                position: position || "",
+                url: url || "",
+            })
+        }
+    }
+
     render() {
         return (
             <form onSubmit={this.handleSubmit} className="portfolio-form-wrapper">
