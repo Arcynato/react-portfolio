@@ -5,7 +5,7 @@ import BlogForm from "../blog/blog-form";
 
 ReactModal.setAppElement(".app-wrapper");
 
-export default class BlogMOdal extends Component {
+export default class BlogModal extends Component {
     constructor(props) {
         super(props);
 
@@ -21,7 +21,13 @@ export default class BlogMOdal extends Component {
             overlay: {
                 backgroundColor: "rgba(1, 1, 1, 0.75)"
             }
-        }
+        };
+
+        this.handleSuccessfulFormSubmission = this.handleSuccessfulFormSubmission.bind(this);
+    }
+
+    handleSuccessfulFormSubmission(blog) {
+        console.log("blog from blog form", blog);
     }
 
     render() {
@@ -31,7 +37,7 @@ export default class BlogMOdal extends Component {
             onRequestClose={() => {
                 {this.props.handleModalClose()};
             }} isOpen={this.props.modalIsOpen}>
-                <BlogForm />
+                <BlogForm  handleSuccessfulFormSubmission={this.handleSuccessfulFormSubmission} />
                 <a onClick={this.props.handleModalClose}>Close the modal</a>
             </ReactModal>
         )
