@@ -33,7 +33,11 @@ export default class BlogForm extends Component {
     handleSubmit() {
         axios.post("https://jameshostetter.devcamp.space/portfolio/portfolio_blogs", this.buildForm(), { withCredentials: true })
         .then(response => {
-            this.props.handleSuccessfulFormSubmission(response.data);
+            this.props.handleSuccessfulFormSubmission(response.data.portfolio_blog);
+            this.setState({
+                title: "",
+                blog_status: ""
+            })
         })
         .catch(error => {
             console.log("error submitting blog form", error);
@@ -44,22 +48,24 @@ export default class BlogForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <input
-                onChange={this.handleChange}
-                type="text"
-                name="title"
-                placeholder="Blog Title"
-                value={this.state.title}
-                />
+            <form onSubmit={this.handleSubmit} className="blog-form-wrapper">
+                <div className="two-column">
+                    <input
+                    onChange={this.handleChange}
+                    type="text"
+                    name="title"
+                    placeholder="Blog Title"
+                    value={this.state.title}
+                    />
 
-                <input
-                onChange={this.handleChange}
-                type="text"
-                name="blog_status"
-                placeholder="Blog Status"
-                value={this.state.blog_status}
-                />
+                    <input
+                    onChange={this.handleChange}
+                    type="text"
+                    name="blog_status"
+                    placeholder="Blog Status"
+                    value={this.state.blog_status}
+                    />
+                </div>
 
                 <button>Save</button>
             </form>
