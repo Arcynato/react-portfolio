@@ -1,16 +1,41 @@
 import React from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import contactPagePicture from '../../../static/assets/images/auth/login.jpg';
 
-export default function() {
+export default function () {
   return (
-    <div className="contact-info-wrapper">
-      <div className="name">
-        James Hostetter
-      </div>
+    <div className="content-page-wrapper">
+      <div
+        className="left-column"
+        style={{
+          background: 'url(' + contactPagePicture + ') no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      <div className="right-column">
+        <div className="contact-bullet-points">
+          <div className="bullet-point-group">
+            <div className="icon">
+              <FontAwesomeIcon icon="phone" />
+            </div>
+            <div className="text">555-555-5555</div>
+          </div>
 
-      <div className="email-address">
-        <FontAwesomeIcon icon="envelope-open-text" />
-        james.hostetter64@gmail.com
+          <div className="bullet-point-group">
+            <div className="icon">
+              <FontAwesomeIcon icon="envelope-open-text" />
+            </div>
+            <div className="text">james.hostetter64@gmail.com</div>
+          </div>
+
+          <div className="bullet-point-group">
+            <div className="icon">
+              <FontAwesomeIcon icon="map-marked-alt" />
+            </div>
+            <div className="text">Danville, VA</div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import DropzoneComponent from 'react-dropzone-component';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import RichTextEditor from '../forms/rich-text-editor';
 
@@ -14,6 +15,8 @@ export default class BlogForm extends Component {
       blog_status: '',
       content: '',
       featured_image: '',
+      apiUrl: 'https://jameshostetter.devcamp.space/portfolio/portfolio_blogs',
+      apiAction: 'post',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,6 +28,7 @@ export default class BlogForm extends Component {
     this.componentConfig = this.componentConfig.bind(this);
     this.djsConfig = this.djsConfig.bind(this);
     this.handleFeaturedImageDrop = this.handleFeaturedImageDrop.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
 
     this.featuredImageRef = React.createRef();
   }
@@ -35,6 +39,9 @@ export default class BlogForm extends Component {
         id: this.props.blog.id,
         title: this.props.blog.title,
         blog_status: this.props.blog.blog_status,
+        content: this.props.blog.content,
+        apiUrl: `https://jameshostetter.devcamp.space/portfolio/portfolio_blogs/${this.props.blog.id}`,
+        apiAction: 'patch',
       });
     }
   }
@@ -84,12 +91,12 @@ export default class BlogForm extends Component {
   }
 
   handleSubmit() {
-    axios
-      .post(
-        'https://jameshostetter.devcamp.space/portfolio/portfolio_blogs',
-        this.buildForm(),
-        { withCredentials: true }
-      )
+    axios({
+      method: this.state.apiAction,
+      url: this.state.apiUrl,
+      data: this.buildForm(),
+      withCredentials: true,
+    })
       .then((response) => {
         if (this.state.featured_image) {
           this.featuredImageRef.current.dropzone.removeAllFiles();
@@ -101,13 +108,34 @@ export default class BlogForm extends Component {
           content: '',
         });
 
-        this.props.handleSuccessfulFormSubmission(response.data.portfolio_blog);
+        if (this.props.editMode) {
+          // Update blog detail
+          this.props.handleUpdateFormSubmission(response.data.portfolio_blog);
+        } else {
+          this.props.handleSuccessfulFormSubmission(
+            response.data.portfolio_blog
+          );
+        }
       })
       .catch((error) => {
         console.log('error submitting blog form', error);
       });
 
     event.preventDefault();
+  }
+
+  deleteImage(imageType) {
+    axios
+      .delete(
+        `https://jameshostetter.devcamp.space/portfolio/delete-portfolio-blog-image/${this.props.blog.id}?image_type=${imageType}`,
+        { withCredentials: true }
+      )
+      .then((response) => {
+        this.props.handleFeaturedImageDelete();
+      })
+      .catch((error) => {
+        console.log('deleteImage', error);
+      });
   }
 
   handleRichTextEditorChange(content) {
@@ -153,9 +181,9 @@ export default class BlogForm extends Component {
               <img src={this.props.blog.featured_image_url} />
 
               <div className="image-removal-link">
-                <a>
+                <a onClick={() => this.deleteImage('featured_image')}>
                   Delete Image
-                  {/* <FontAwesomeIcon icon="video-slash" /> */}
+                  <FontAwesomeIcon icon="video-slash" />
                 </a>
               </div>
             </div>
