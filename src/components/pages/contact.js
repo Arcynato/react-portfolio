@@ -19,15 +19,13 @@ export default function () {
             <div className="icon">
               <FontAwesomeIcon icon="phone" />
             </div>
-
             <div className="text">555-555-5555</div>
           </div>
 
           <div className="bullet-point-group">
             <div className="icon">
-              <FontAwesomeIcon icon="envelope" />
+              <FontAwesomeIcon icon="envelope-open-text" />
             </div>
-
             <div className="text">james.hostetter64@gmail.com</div>
           </div>
 
@@ -35,7 +33,6 @@ export default function () {
             <div className="icon">
               <FontAwesomeIcon icon="map-marked-alt" />
             </div>
-
             <div className="text">Danville, VA</div>
           </div>
         </div>

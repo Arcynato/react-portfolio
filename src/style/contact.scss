@@ -1,0 +1,22 @@
+.contact-info-wrapper {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    font-family: 'Work Sans', sans-serif;
+    background-color: aquamarine;
+
+    .name {
+        font-size: 1.5em;
+        color: $dark-blue;
+        text-decoration: underline;
+        border: 1px solid transparent;
+        transition: 0.25s ease-in-out;
+
+        &:hover {
+            // border-right: 1px solid $warning;
+            // border-bottom: 1px solid $warning;
+            border-radius: 5px;
+            box-shadow: 6px 6px 9px 0px rgba(66,69,74,1);
+        }
+    }
+}
