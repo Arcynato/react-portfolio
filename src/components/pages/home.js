@@ -1,7 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
 
-import PortfolioContainer from '../portfolio/portfolio-container';
+import PortfolioContainer from "../portfolio/portfolio-container";
 
 export default function() {
   return (

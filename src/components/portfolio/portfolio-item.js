@@ -1,32 +1,25 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class PortfolioItem extends Component {
-  // Data that we'll need:
-  // - background image: thumb_image_url
-  // - logo
-  // - description: description
-  // - id: id
-  // "position", "thumb_image_url", "banner_image_url", "logo_url", "column_names_merged_with_images"
   constructor(props) {
     super(props);
 
     this.state = {
-      portfolioItemClass: '',
+      portfolioItemClass: ""
     };
   }
 
   handleMouseEnter() {
-    this.setState({ portfolioItemClass: 'image-blur' });
+    this.setState({ portfolioItemClass: "image-blur" });
   }
 
   handleMouseLeave() {
-    this.setState({ portfolioItemClass: '' });
+    this.setState({ portfolioItemClass: "" });
   }
 
   render() {
     const { id, description, thumb_image_url, logo_url } = this.props.item;
-
     return (
       <Link to={`/portfolio/${id}`}>
         <div
@@ -36,10 +29,10 @@ export default class PortfolioItem extends Component {
         >
           <div
             className={
-              'portfolio-img-background ' + this.state.portfolioItemClass
+              "portfolio-img-background " + this.state.portfolioItemClass
             }
             style={{
-              backgroundImage: 'url(' + thumb_image_url + ')',
+              backgroundImage: "url(" + thumb_image_url + ")"
             }}
           />
 

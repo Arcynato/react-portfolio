@@ -24,12 +24,6 @@ export default class PortfolioContainer extends Component {
     }
   }
 
-  portfolioItems() {
-    return this.state.data.map((item) => {
-      return <PortfolioItem key={item.id} item={item} />;
-    });
-  }
-
   getPortfolioItems(filter = null) {
     axios
       .get('https://jameshostetter.devcamp.space/portfolio/portfolio_items')
@@ -51,6 +45,12 @@ export default class PortfolioContainer extends Component {
       });
   }
 
+  portfolioItems() {
+    return this.state.data.map((item) => {
+      return <PortfolioItem key={item.id} item={item} />;
+    });
+  }
+
   componentDidMount() {
     this.getPortfolioItems();
   }
@@ -65,21 +65,21 @@ export default class PortfolioContainer extends Component {
         <div className="filter-links">
           <button
             className="btn"
-            onClick={() => this.handleFilter('construction')}
+            onClick={() => this.handleFilter('eCommerce')}
           >
-            IT Support
+            eCommerce
           </button>
           <button
             className="btn"
-            onClick={() => this.handleFilter('help_desk')}
+            onClick={() => this.handleFilter('Scheduling')}
           >
-            Internet Help Desk
+            Scheduling
           </button>
           <button
             className="btn"
-            onClick={() => this.handleFilter('cable_technician')}
+            onClick={() => this.handleFilter('Enterprise')}
           >
-            Cable Installation Technician
+            Enterprise
           </button>
           <button
             className="btn"

@@ -16,8 +16,8 @@
     .auth-form-wrapper {
       @include input-element();
       @include base-grid();
-      padding: 42px;
       grid-gap: 21px;
+      padding: 42px;
 
       .form-group {
         display: flex;
